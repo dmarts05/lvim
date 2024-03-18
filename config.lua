@@ -82,6 +82,7 @@ mason_tool_installer.setup({
 		"isort",
 		"pyright",
 		"debugpy",
+		"prettier",
 	},
 	auto_update = false,
 })
@@ -113,6 +114,7 @@ formatters.setup({
 	{ command = "gofumpt", filetypes = { "go" } },
 	{ command = "black", filetypes = { "python" } },
 	{ command = "isort", filetypes = { "python" } },
+	{ name = "prettier", filetypes = { "javascript", "typescript", "json", "yaml", "html", "css", "tsx" } },
 })
 
 lvim.format_on_save = true
