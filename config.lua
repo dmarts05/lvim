@@ -58,6 +58,8 @@ lvim.plugins = {
 	-- Python
 	"mfussenegger/nvim-dap-python",
 	"nvim-neotest/neotest-python",
+	-- Java
+	"mfussenegger/nvim-jdtls",
 }
 
 ------------------------
@@ -102,6 +104,7 @@ lvim.builtin.treesitter.ensure_installed = {
 	"html",
 	"css",
 	"tsx",
+	"java",
 }
 
 ------------------------
@@ -138,10 +141,19 @@ dapgo.setup()
 local dap_python = require("dap-python")
 dap_python.setup(mason_path .. "packages/debugpy/venv/bin/python")
 
+vim.list_extend({}, vim.split(vim.fn.glob(mason_path .. "packages/java-test/extension/server/*.jar"), "\n"))
+vim.list_extend(
+	{},
+	vim.split(
+		vim.fn.glob(mason_path .. "packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"),
+		"\n"
+	)
+)
+
 ------------------------
 -- LSP
 ------------------------
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "gopls" })
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "gopls", "jdtls" })
 
 local lsp_manager = require("lvim.lsp.manager")
 
@@ -194,6 +206,55 @@ lsp_manager.setup("pyright", {
 		},
 	},
 })
+
+lsp_manager.setup("jdtls", {
+	on_attach = require("lvim.lsp").common_on_attach,
+	on_init = require("lvim.lsp").common_on_init,
+	capabilities = require("lvim.lsp").common_capabilities(),
+	settings = {
+		java = {
+			eclipse = {
+				downloadSources = true,
+			},
+			configuration = {
+				updateBuildConfiguration = "interactive",
+				runtimes = {
+					{
+						name = "JavaSE-11",
+						path = "/usr/lib/jvm/java-11-openjdk",
+					},
+					{
+						name = "JavaSE-21",
+						path = "/usr/lib/jvm/java-21-openjdk",
+					},
+				},
+			},
+			maven = {
+				downloadSources = true,
+			},
+			implementationsCodeLens = {
+				enabled = true,
+			},
+			referencesCodeLens = {
+				enabled = true,
+			},
+			references = {
+				includeDecompiledSources = true,
+			},
+			inlayHints = {
+				parameterNames = {
+					enabled = "all", -- literals, all, none
+				},
+			},
+			format = {
+				enabled = false,
+			},
+		},
+		signatureHelp = { enabled = true },
+	},
+})
+
+-- TODO: https://github.com/LunarVim/starter.lvim/blob/java-ide/ftplugin/java.lua
 
 local status_ok, gopher = pcall(require, "gopher")
 if not status_ok then
