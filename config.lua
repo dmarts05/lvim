@@ -83,8 +83,6 @@ mason_tool_installer.setup({
 		"pyright",
 		"debugpy",
 		"prettier",
-		"jdtls",
-		"google-java-format",
 	},
 	auto_update = true,
 })
@@ -104,7 +102,6 @@ lvim.builtin.treesitter.ensure_installed = {
 	"html",
 	"css",
 	"tsx",
-	"java",
 }
 
 ------------------------
@@ -114,5 +111,4 @@ local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
 	{ name = "stylua", filetypes = { "lua" } },
 	{ name = "prettier", filetypes = { "javascript", "typescript", "json", "yaml", "html", "css", "tsx" } },
-	{ name = "google_java_format", filetypes = { "java" } },
 })
