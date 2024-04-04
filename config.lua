@@ -65,7 +65,7 @@ lvim.plugins = {
 			vim.defer_fn(function()
 				require("copilot").setup({
 					suggestion = {
-						auto_trigger = true,
+						auto_trigger = false,
 						keymap = {
 							accept = "<C-l>",
 							accept_word = "<C-S-l>",
