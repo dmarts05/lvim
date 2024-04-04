@@ -1,7 +1,3 @@
--- Split buffers
-lvim.keys.normal_mode["|"] = ":vsplit<CR>"
-lvim.keys.normal_mode["-"] = ":split<CR>"
-
 -- Resize with arrows
 lvim.keys.normal_mode["<C-S-K>"] = ":resize -2<CR>"
 lvim.keys.normal_mode["<C-S-J>"] = ":resize +2<CR>"
@@ -23,4 +19,17 @@ lvim.builtin.which_key.mappings["t"] = {
 	f = { "<cmd>lua require('neotest').run.run({vim.fn.expand('%')})<cr>", "Test File" },
 	F = { "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", "Test File DAP" },
 	S = { "<cmd>lua require('neotest').summary.toggle()<cr>", "Test Summary" },
+}
+
+-- Window Management
+lvim.builtin.which_key.mappings["w"] = {
+	name = "Window",
+	h = { "<cmd>split<cr>", "Split Horizontal" },
+	v = { "<cmd>vsplit<cr>", "Split Vertical" },
+}
+
+-- Buffers
+lvim.builtin.which_key.mappings["b"] = {
+	lvim.builtin.which_key.mappings["b"],
+	m = { "<cmd>BufferLineCloseLeft<cr><cmd>BufferLineCloseRight<cr>", "Close other buffers" },
 }
