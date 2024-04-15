@@ -57,28 +57,6 @@ lvim.plugins = {
 	-- Python
 	"mfussenegger/nvim-dap-python",
 	"nvim-neotest/neotest-python",
-	{
-		"zbirenbaum/copilot-cmp",
-		event = "InsertEnter",
-		dependencies = { "zbirenbaum/copilot.lua" },
-		config = function()
-			vim.defer_fn(function()
-				require("copilot").setup({
-					suggestion = {
-						auto_trigger = false,
-						keymap = {
-							accept = "<C-l>",
-							accept_word = "<C-S-l>",
-							next = "<C-j>",
-							prev = "<C-k>",
-							dismiss = "<C-h>",
-						},
-					},
-				})
-				require("copilot_cmp").setup()
-			end, 100)
-		end,
-	},
 }
 
 ------------------------
